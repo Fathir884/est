@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KILAT NEWS | Portal Berita Terkini</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    
+    <style>
+        :root {
+            --warna-utama: #1a4d94;
+            --warna-sekunder: #d90429;
+            --warna-latar: #f8f9fa;
+            --warna-teks: #343a40;
+            --font-tebal: 7s00;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--warna-latar);
+            color: var(--warna-teks);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 15px;
+        }
+
+        /* 1. HEADER & NAVIGASI MENU */
+        .header {
+            background-color: var(--warna-utama);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 900;
+            text-decoration: none;
+            color: var(--warna-sekunder);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            margin-right: 10px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .menu-item {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .nav-link, .dropdown-link {
+            color: white;
+            text-decoration: none;
+            padding: 10px 5px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover, .dropdown-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Highlight Menu Aktif */
+        .nav-link.aktif {
+            background-color: var(--warna-sekunder);
+            border-radius: 4px;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-konten {
+            display: none;
+            position: absolute;
+            background-color: var(--warna-utama);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+        }
+
+        .menu-item:hover .dropdown-konten {
+            display: block;
+        }
+
+        .dropdown-link {
+            padding: 12px 16px;
+        }
+
+        /* TRENDING BAR */
+        .trending-bar {
+            background-color: var(--warna-sekunder);
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: var(--font-tebal);
+            margin-bottom: 20px;
+        }
+        
+        .trending-bar .container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .trending-label {
+            background-color: white;
+            color: var(--warna-sekunder);
+            padding: 2px 8px;
+            margin-right: 15px;
+            border-radius: 3px;
+            font-weight: var(--font-tebal);
+        }
+
+        /* 3. LAYOUT UTAMA: Main Body dan Sidebar */
+        .main-layout {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px 0;
+            gap: 20px;
+        }
+
+        .main-body {
+            flex: 3;
+            min-width: 300px; 
+            order: 2; 
+        }
+
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            order: 1; 
+        }
+
+        /* CAROUSEL UTAMA */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            height: 350px;
+            position: relative;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 20px;
+        }
+
+        .carousel-caption h2 {
+            margin: 0;
+            font-size: 1.8em;
+            line-height: 1.2;
+        }
+
+        .carousel-caption p {
+            margin: 5px 0 0 0;
+            font-size: 0.9em;
+        }
+
+        /* ARTIKEL UTAMA (List Style) */
+        .artikel-card {
+            background-color: white;
+            border-bottom: 1px solid #eee;
+            padding: 20px 0;
+            margin-bottom: 0;
+            overflow: visible;
+            display: flex;
+            flex-direction: row-reverse;
+            border-left: none; 
+            align-items: flex-start;
+        }
+        
+        .artikel-card:last-child {
+            border-bottom: none;
+        }
+
+        .artikel-gambar-kontainer {
+            flex: 0 0 200px;
+            margin-left: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .artikel-gambar {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .artikel-konten {
+            padding: 0; 
+            flex: 1;
+        }
+        
+        .artikel-kategori {
+            color: var(--warna-sekunder);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            display: block;
+            font-weight: var(--font-tebal);
+        }
+
+        .artikel-judul {
+            font-size: 1.3em;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            color: var(--warna-teks);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .artikel-judul:hover {
+            color: var(--warna-sekunder);
+        }
+
+        .tombol-baca {
+            display: none;
+        }
+        
+        /* HIGHLIGHT SECTION */
+        .highlight-judul {
+            font-size: 1.5em;
+            color: var(--warna-sekunder);
+            margin-bottom: 10px;
+            border-left: 5px solid var(--warna-utama);
+            padding-left: 10px;
+        }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .highlight-item a {
+            text-decoration: none;
+            color: var(--warna-teks);
+            font-size: 0.9em;
+            display: block;
+        }
+        
+        .highlight-item img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            margin-bottom: 5px;
+        }
+        .highlight-item span {
+            font-weight: var(--font-tebal);
+            line-height: 1.2;
+        }
+
+
+        /* SIDEBAR (WIDGETS & TERPOPULER) */
+        .widget {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .widget h3 {
+            border-bottom: 3px solid var(--warna-sekunder);
+            padding-bottom: 10px;
+            margin-top: 0;
+            color: var(--warna-utama);
+        }
+
+        #widget-jam {
+            font-size: 1.5em;
+            font-weight: var(--font-tebal);
+            text-align: center;
+            color: var(--warna-sekunder);
+        }
+
+        .tulisan-berjalan {
+            background-color: var(--warna-latar);
+            color: var(--warna-teks);
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+            white-space: nowrap;
+            border: 1px solid #ddd;
+        }
+        
+        /* TERPOPULER LIST */
+        .terpopuler-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .terpopuler-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .terpopuler-item a {
+            color: var(--warna-teks);
+            text-decoration: none;
+            font-size: 0.95em;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .terpopuler-item a:hover {
+            color: var(--warna-sekunder);
+        }
+        
+        .urutan-nomor {
+            font-size: 1.5em;
+            font-weight: var(--font-tebal);
+            color: var(--warna-sekunder);
+            margin-right: 10px;
+            line-height: 1;
+        }
+        .urutan-nomor::after {
+            content: ".";
+        }
+
+
+        /* Konten Halaman Lain (About, Gallery, Contact, Registration) */
+        .halaman-konten {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .halaman-judul {
+            color: var(--warna-utama);
+            border-bottom: 2px solid var(--warna-sekunder);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        /* GALLERY */
+        .galeri-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        /* RESPONSIVENESS */
+        @media (max-width: 900px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            
+            .main-body, .sidebar {
+                flex: none;
+                width: 100%;
+                order: initial; 
+            }
+            
+            .artikel-card {
+                flex-direction: column;
+            }
+            .artikel-gambar-kontainer {
+                flex: none;
+                width: 100%;
+                margin-left: 0;
+                margin-bottom: 10px;
+            }
+            .artikel-gambar {
+                height: 180px;
+            }
+            
+            .menu-list {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .menu-item {
+                margin: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .dropdown-konten {
+                position: static;
+                width: 100%;
+            }
+
+            .nav-link {
+                text-align: center;
+            }
+            
+            .carousel-item {
+                height: 250px;
+            }
+            
+            .carousel-caption h2 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container nav-menu">
+            <a href="#" class="logo" onclick="tampilkanHalaman('home'); return false;">
+                KILAT NEWS
+            </a>
+            <nav>
+                <ul class="menu-list">
+                    <li class="menu-item"><a href="#" class="nav-link" onclick="tampilkanHalaman('home'); return false;">Home</a></li>
+                    <li class="menu-item dropdown">
+                        <a href="#" class="nav-link" onclick="tampilkanHalaman('about'); return false;">About ▼</a>
+                        <div class="dropdown-konten">
+                            <a href="#" class="dropdown-link" onclick="tampilkanHalaman('about'); return false;">Profil Lembaga</a>
+                            <a href="#" class="dropdown-link" onclick="tampilkanHalaman('about'); return false;">Visi & Misi</a>
+                        </div>
+                    </li>
+                    <li class="menu-item"><a href="#" class="nav-link" onclick="tampilkanHalaman('gallery'); return false;">Gallery</a></li>
+                    <li class="menu-item"><a href="#" class="nav-link" onclick="tampilkanHalaman('registration'); return false;">Registration</a></li>
+                    <li class="menu-item"><a href="#" class="nav-link" onclick="tampilkanHalaman('contact'); return false;">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="trending-bar">
+        <div class="container">
+            <span class="trending-label">TRENDING</span>
+            <marquee scrollamount="5">Gencatan Senjata Gaza - Umrah Mandiri - Whoosh Kereta Cepat - Greenovation - IMF Rilis Proyeksi Ekonomi Global</marquee>
+        </div>
+    </div>
+
+    <div class="container main-layout">
+        
+        <aside class="sidebar">
+
+            <div class="widget">
+                <h3>Waktu</h3>
+                <div id="widget-jam"></div>
+            </div>
+
+            <div class="widget">
+                <h3>Video</h3>
+                <a href="https://www.youtube.com/watch?v=SHaoAG61XK8" target="_blank" style="display: block; position: relative; aspect-ratio: 16/9; margin-top: 10px; border-radius: 5px; overflow: hidden; text-decoration: none;">
+                    <!-- Simulasi Thumbnail Video -->
+                    <img src="https://img.youtube.com/vi/SHaoAG61XK8/hqdefault.jpg" alt="Thumbnail Video Tips Optimasi" style="width: 100%; height: 100%; object-fit: cover;">
+                    <!-- Ikon Play Simulasi -->
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 40px; background-color: rgba(255, 0, 0, 0.8); border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 3px solid white;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                </a>
+                <p style="font-size:0.8em; margin-top: 10px; color: #6c757d;">Prabowo Minta Utang 'Whoosh' Dibereskan </p>
+            </div>
+
+            <!-- WIDGET TERPOPULER -->
+            <div class="widget">
+                <h3>TERPOPULER</h3>
+                <ul class="terpopuler-list">
+                    <li class="terpopuler-item">
+                        <a href="#" onclick="tampilkanArtikel(1); return false;">
+                            <span class="urutan-nomor">01</span>
+                            <p>Dampak Perubahan Kebijakan Fiskal Terhadap Sektor UMKM</p>
+                        </a>
+                    </li>
+                     <li class="terpopuler-item">
+                        <a href="#" onclick="tampilkanArtikel(2); return false;">
+                            <span class="urutan-nomor">02</span>
+                            <p>Luncurkan Chipset AI Generasi Baru, Klaim Efisiensi 40%</p>
+                        </a>
+                    </li>
+                     <li class="terpopuler-item">
+                        <a href="#" onclick="tampilkanArtikel(3); return false;">
+                            <span class="urutan-nomor">03</span>
+                            <p>Drama 5 Set di Final Liga Voli Nasional, Juara Bertahan Tumbang</p>
+                        </a>
+                    </li>
+                    <li class="terpopuler-item">
+                        <a href="#" onclick="tampilkanHalaman('artikel-terpopuler-4'); return false;">
+                            <span class="urutan-nomor">04</span>
+                            <p>Ketegangan Geopolitik Baru di Laut Cina Selatan Memicu Kekhawatiran</p>
+                        </a>
+                    </li>
+                    <li class="terpopuler-item" style="border-bottom: none;">
+                        <a href="#" onclick="tampilkanHalaman('artikel-terpopuler-5'); return false;">
+                            <span class="urutan-nomor">05</span>
+                            <p>Penemuan Planet Baru di Zona Layak Huni: Harapan Kedua Umat Manusia</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- WIDGET IKLAN/FOKUS -->
+            <div class="widget">
+                <h3>Iklan</h3>
+                 <a href=https://www.tokopedia.com/>
+                     <div style="background-color: #f0f8ff; border: 1px solid #ddd; padding: 10px; text-align: center; border-radius: 5px;">
+                        <img src="data:image/jpeg;base64,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" alt="Iklan Universitas" style="width:100%; height: auto; margin-bottom: 10px; border-radius: 5px;">
+
+                        <p style="color: #666; font-size: 0.85em; margin: 0;">Iklan</p>
+                    </div>
+                 </a>
+            </div>
+        </aside>
+
+        <main class="main-body">
+
+            <div id="home" class="halaman-konten">
+                <h1 class="halaman-judul" style="border: none; margin-bottom: 5px;">Sorotan Utama</h1>
+                
+                <div class="carousel-container">
+                    <div id="photo-carousel-inner" class="carousel-inner">
+                        <div class="carousel-item">
+                            <a href="#" onclick="tampilkanHalaman('artikel-sorotan-1'); return false;">
+                                <img src="https://picsum.photos/seed/kabinet/1200/350" alt="Foto Utama 1">
+                                <div class="carousel-caption">
+                                    <h2>BREAKING: Presiden Umumkan Pembentukan Kabinet Baru, Fokus Pada Kedaulatan Digital</h2>
+                                    <p>Nasional - 2 jam lalu</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#" onclick="tampilkanHalaman('artikel-sorotan-2'); return false;">
+                                <img src="https://picsum.photos/seed/satellite/1200/350" alt="Foto Utama 2">
+                                <div class="carousel-caption">
+                                    <h2>Raksasa Teknologi Luncurkan Satelit Komunikasi 6G Pertama di Dunia</h2>
+                                    <p>Teknologi - 5 jam lalu</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="#" onclick="tampilkanHalaman('artikel-sorotan-3'); return false;">
+                                <img src="https://picsum.photos/seed/oil/1200/350" alt="Foto Utama 3">
+                                <div class="carousel-caption">
+                                    <h2>Harga Minyak Dunia Anjlok Setelah Kesepakatan Produksi Baru OPEC</h2>
+                                    <p>Ekonomi - 1 hari lalu</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Simulasi Highlight Grid (9/16 Play) -->
+                <h2 class="highlight-judul">Video Pilihan</h2>
+                <div class="highlight-grid">
+                    <div class="highlight-item">
+                        <a href="#" onclick="tampilkanHalaman('artikel-video-1'); return false;">
+                            <img src="https://picsum.photos/seed/demo/150/80" alt="Video 1">
+                            <span>Warga Favela Brasil Demo Buntut 132 Tewas Saat Razia</span>
+                        </a>
+                    </div>
+                    <div class="highlight-item">
+                        <a href="#" onclick="tampilkanHalaman('artikel-video-2'); return false;">
+                            <img src="https://picsum.photos/seed/trainwreck/150/80" alt="Video 2">
+                            <span>Detik-detik Kereta Penumpang Tabrak Truk di Perlintasan</span>
+                        </a>
+                    </div>
+                    <div class="highlight-item">
+                        <a href="#" onclick="tampilkanHalaman('artikel-video-3'); return false;">
+                            <img src="https://picsum.photos/seed/rocket/150/80" alt="Video 3">
+                            <span>Resmi Meluncur, Roket Shenzhou-21 Bawa Astronaut</span>
+                        </a>
+                    </div>
+                    <div class="highlight-item">
+                        <a href="#" onclick="tampilkanHalaman('artikel-video-4'); return false;">
+                            <img src="https://picsum.photos/seed/tanzania/150/80" alt="Video 4">
+                            <span>Ricuh Demo Protes Hasil Pemilu di Tanzania Tewaskan...</span>
+                        </a>
+                    </div>
+                </div>
+
+                <h1 class="halaman-judul">Berita Terbaru</h1>
+                
+                <!-- Artikel 1: Politik (List Item) -->
+                <div class="artikel-card">
+                    <div class="artikel-gambar-kontainer">
+                        <img src="https://picsum.photos/seed/umkm/200/120" alt="Gambar Politik" class="artikel-gambar">
+                    </div>
+                    <div class="artikel-konten">
+                        <span class="artikel-kategori">Nasional</span>
+                        <a href="#" class="artikel-judul" onclick="tampilkanArtikel(1); return false;">Dampak Perubahan Kebijakan Fiskal Terhadap Sektor UMKM</a>
+                        <p style="font-size: 0.9em; color: #6c757d;">Analisis pakar ekonomi mengenai respons usaha mikro kecil dan menengah (UMKM) terhadap paket kebijakan fiskal terbaru...</p>
+                        <!-- Tombol Baca Selengkapnya dihilangkan sesuai style list, klik judul/area konten sebagai gantinya -->
+                    </div>
+                </div>
+
+                <!-- Artikel 2: Teknologi (List Item) -->
+                <div class="artikel-card">
+                    <div class="artikel-gambar-kontainer">
+                        <img src="https://picsum.photos/seed/chipset/200/120" alt="Gambar Teknologi" class="artikel-gambar">
+                    </div>
+                    <div class="artikel-konten">
+                        <span class="artikel-kategori">Teknologi</span>
+                        <a href="#" class="artikel-judul" onclick="tampilkanArtikel(2); return false;">Luncurkan Chipset AI Generasi Baru, Klaim Efisiensi 40%</a>
+                        <p style="font-size: 0.9em; color: #6c757d;">Perusahaan teknologi raksasa mengumumkan terobosan dalam pengembangan chip kecerdasan buatan, menjanjikan efisiensi energi...</p>
+                    </div>
+                </div>
+
+                <!-- Artikel 3: Olahraga (List Item) -->
+                <div class="artikel-card">
+                    <div class="artikel-gambar-kontainer">
+                        <img src="https://picsum.photos/seed/volleyball/200/120" alt="Gambar Olahraga" class="artikel-gambar">
+                    </div>
+                    <div class="artikel-konten">
+                        <span class="artikel-kategori">Olahraga</span>
+                        <a href="#" class="artikel-judul" onclick="tampilkanArtikel(3); return false;">Drama 5 Set di Final Liga Voli Nasional, Juara Bertahan Tumbang</a>
+                        <p style="font-size: 0.9em; color: #6c757d;">Pertandingan final yang dramatis menyajikan pertarungan sengit hingga set kelima, menghasilkan juara baru setelah dominasi...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="about" class="halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Tentang Kami: Profil KILAT NEWS</h1>
+                <h2>Profil Lembaga</h2>
+                <p>KILAT NEWS didirikan pada tahun 2023 sebagai platform berita independen yang berkomitmen menyajikan informasi faktual, mendalam, dan terpercaya. Kami beroperasi dengan standar jurnalisme tertinggi untuk memenuhi kebutuhan informasi masyarakat Indonesia.</p>
+                
+                <h2>Sejarah Lembaga</h2>
+                <p>Berawal dari inisiatif sekelompok jurnalis muda, KILAT NEWS berkembang pesat, memanfaatkan teknologi digital untuk distribusi berita. Dalam waktu singkat, kami telah menjadi sumber referensi utama di bidang analisis politik dan teknologi.</p>
+                
+                <h2 id="visi-misi-section">Visi dan Misi Lembaga</h2>
+                <h3>Visi</h3>
+                <p>Menjadi portal berita digital terdepan di Asia Tenggara yang mengedepankan integritas, inovasi, dan dampak sosial positif.</p>
+                <h3>Misi</h3>
+                <ul>
+                    <li>Menyajikan berita yang berimbang dan tidak memihak.</li>
+                    <li>Mendorong diskusi publik yang konstruktif melalui jurnalisme investigatif.</li>
+                    <li>Mengembangkan teknologi distribusi berita yang adaptif dan cepat.</li>
+                </ul>
+                
+                <h2>Tujuan Lembaga</h2>
+                <p>Memberikan pemahaman yang komprehensif kepada publik mengenai isu-isu krusial nasional dan global, serta memberdayakan masyarakat dengan informasi yang akurat.</p>
+                
+                <h2>Struktur Organisasi</h2>
+                <p></p>
+                <p>Kami dipimpin oleh Dewan Redaksi berpengalaman dan didukung oleh tim koresponden yang tersebar di berbagai wilayah.</p>
+            </div>
+
+            <div id="gallery" class="halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Galeri Kegiatan dan Liputan</h1>
+                <div class="galeri-grid">
+                    <div class="galeri-item"><img src="https://picsum.photos/seed/konferensi/300/200" alt="Liputan 1"></div>
+                    <div class="galeri-item"><img src="https://picsum.photos/seed/wawancara/300/200" alt="Wawancara 2"></div>
+                    <div class="galeri-item"><img src="https://picsum.photos/seed/redaksi/300/200" alt="Rapat 3"></div>
+                    <div class="galeri-item"><img src="https://picsum.photos/seed/program/300/200" alt="Program 4"></div>
+                    <div class="galeri-item"><img src="https://picsum.photos/seed/seminar/300/200" alt="Webinar 5"></div>
+                    <div class="galeri-item"><img src="https://picsum.photos/seed/penghargaan/300/200" alt="Penghargaan 6"></div>
+                </div>
+            </div>
+
+            <!-- HALAMAN REGISTRATION -->
+            <div id="registration" class="halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Daftar Langganan Newsletter KILAT NEWS</h1>
+                <p>Daftar sekarang untuk mendapatkan rangkuman berita harian eksklusif langsung ke email Anda.</p>
+                <form id="form-registrasi">
+                    <div class="form-group">
+                        <label for="reg-nama">Nama Lengkap</label>
+                        <input type="text" id="reg-nama" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email Aktif</label>
+                        <input type="email" id="reg-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-minat">Minat Berita Utama</label>
+                        <select id="reg-minat">
+                            <option value="politik">Politik & Ekonomi</option>
+                            <option value="teknologi">Teknologi & Sains</option>
+                            <option value="olahraga">Olahraga</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <p id="pesan-registrasi" style="margin-top: 15px; font-weight: bold; color: green;"></p>
+                </form>
+            </div>
+
+            <!-- HALAMAN CONTACT -->
+            <div id="contact" class="halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Hubungi Kami</h1>
+                <p>Kami menghargai setiap masukan dan pertanyaan dari pembaca. Silakan hubungi kami melalui formulir di bawah atau kontak resmi kami.</p>
+
+                <h2>Formulir Kontak</h2>
+                <form id="form-kontak">
+                    <div class="form-group">
+                        <label for="kontak-nama">Nama</label>
+                        <input type="text" id="kontak-nama" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kontak-email">Email</label>
+                        <input type="email" id="kontak-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kontak-institusi">Institusi (Opsional)</label>
+                        <input type="text" id="kontak-institusi">
+                    </div>
+                    <div class="form-group">
+                        <label for="kontak-pesan">Pesan</label>
+                        <textarea id="kontak-pesan" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="tombol-kirim">Kirim Pesan</button>
+                    <p id="pesan-kontak" style="margin-top: 15px; font-weight: bold; color: green;"></p>
+                </form>
+
+                <h2 style="margin-top: 30px;">Kontak Resmi</h2>
+                <p><strong>Email:</strong> redaksi@kilatnews.com</p>
+                <p><strong>Media Sosial:</strong> <a href="#" target="_blank">Twitter @KilatNewsID</a> | <a href="#" target="_blank">Instagram @KilatNews</a></p>
+            </div>
+
+            <!-- HALAMAN ARTIKEL LENGKAP UTAMA (3 Artikel) -->
+            <div id="artikel-lengkap-1" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul" id="judul-artikel-1">Dampak Perubahan Kebijakan Fiskal Terhadap Sektor UMKM</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 2 November 2025 | Kategori: Nasional</p>
+                <img src="https://picsum.photos/seed/umkmbesar/800/300" alt="Artikel Lengkap 1">
+                
+                <p>Jakarta – Kebijakan fiskal yang baru-baru ini diumumkan pemerintah menimbulkan reaksi beragam dari pelaku usaha mikro, kecil, dan menengah (UMKM). Analisis kami menunjukkan bahwa meskipun tujuannya adalah optimalisasi penerimaan negara, ada kekhawatiran mengenai peningkatan beban kepatuhan administrasi. Kebijakan ini, yang mencakup perubahan tarif dan perluasan basis pajak, diprediksi akan memiliki dampak ganda: meningkatkan kas negara namun berpotensi memperlambat laju pemulihan ekonomi di sektor yang paling rentan.</p>
+
+                <p>Dalam wawancara eksklusif, Ketua Asosiasi Pengusaha Muda menyatakan bahwa perlu adanya masa transisi yang lebih panjang dan insentif spesifik untuk UMKM yang baru merintis. "Beban administrasi dan kepatuhan pajak yang tiba-tiba meningkat bisa mengganggu *cash flow* usaha kecil," ujarnya. Selain itu, diperlukan sosialisasi yang masif dan sederhana dari otoritas pajak agar UMKM, yang sebagian besar tidak memiliki staf akuntansi, dapat mematuhi aturan baru tanpa kesulitan yang berarti. Kegagalan dalam sosialisasi hanya akan menciptakan ketidakpastian.</p>
+
+                <p>Para ekonom menyarankan agar pemerintah fokus pada pemberian stimulus non-fiskal yang dapat mengimbangi dampak pengetatan kebijakan ini, seperti akses yang lebih mudah ke permodalan murah dan pelatihan digitalisasi usaha. Keseimbangan antara kebutuhan fiskal negara dan perlindungan UMKM sebagai tulang punggung ekonomi nasional adalah kunci utama keberhasilan implementasi kebijakan ini dalam jangka panjang. KILAT NEWS akan terus memantau perkembangan dan dialog antara pemerintah dan pelaku usaha. </p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-lengkap-2" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul" id="judul-artikel-2">Luncurkan Chipset AI Generasi Baru, Klaim Efisiensi 40%</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 1 November 2025 | Kategori: Teknologi</p>
+                <img src="https://img.freepik.com/vektor-premium/prosesor-chipset-ai-bercahaya-dan-sirkuit-cpu-kecerdasan-buatan-futuristik-dengan-motherboard_514961-757.jpg" alt="Artikel Lengkap 2">
+                
+                <p>San Francisco – Dunia teknologi dikejutkan dengan peluncuran chip prosesor AI teranyar, kode nama 'Flash-V', yang diklaim mampu memproses data dengan efisiensi energi 40% lebih baik dari pendahulunya. Inovasi ini diperkirakan akan merevolusi komputasi awan dan perangkat *edge* dengan mengurangi secara signifikan konsumsi daya yang selama ini menjadi tantangan terbesar dalam pengembangan kecerdasan buatan skala besar. Penemuan ini merupakan hasil riset selama lima tahun yang dilakukan oleh tim insinyur terkemuka.</p>
+
+                <p>Efisiensi energi yang tinggi ini dicapai melalui arsitektur baru yang mengintegrasikan unit pemrosesan neuromorfik dengan memori *in-sensor*. Secara sederhana, chip ini didesain untuk "berpikir" lebih seperti otak manusia, memproses data hanya saat dibutuhkan. Berdasarkan data ilmiah awal yang disajikan pada Konferensi Komputasi Lanjutan tahunan, pengurangan kebutuhan daya ini tidak mengorbankan kecepatan pemrosesan; bahkan, latensi dilaporkan menurun sebesar 15% pada tugas-tugass pembelajaran mendalam (deep learning) standar.</p>
+
+                <p>Para pengembang kini berlomba-lomba untuk mengintegrasikan chipset ini ke dalam produk mereka, mulai dari kendaraan otonom, server data center, hingga perangkat IOT rumah tangga. Efek domino-nya diperkirakan akan terasa di pasar saham teknologi global pada kuartal mendatang, dengan perusahaan produsen *chip* lainnya dipaksa untuk mengejar standar efisiensi yang baru ini. Ketersediaan komersial massal chip 'Flash-V' dijadwalkan pada awal kuartal kedua tahun depan.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-lengkap-3" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul" id="judul-artikel-3">Drama 5 Set di Final Liga Voli Nasional, Juara Bertahan Tumbang</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 31 Oktober 2025 | Kategori: Olahraga</p>
+                <img src="https://picsum.photos/seed/volleyballgame/800/300" alt="Artikel Lengkap 3">
+                
+                <p>Bandung – Suasana tegang menyelimuti GOR saat dua tim terbaik di Liga Voli Nasional, Garuda Perkasa dan Bintang Timur, beradu strategi dalam final yang harus diselesaikan hingga set kelima. Pertandingan berlangsung selama empat jam penuh dengan skor yang saling kejar-kejaran, menunjukkan kualitas mental baja dari kedua tim. Garuda Perkasa, yang telah mendominasi liga selama tiga musim berturut-turut, datang sebagai unggulan, namun Bintang Timur membuktikan bahwa mereka siap menciptakan sejarah baru.</p>
+
+                <p>Momen kunci terjadi pada set keempat ketika Bintang Timur, yang tertinggal 1-2, bangkit dari defisit poin kritis berkat pertahanan solid di lini belakang dan serangan cepat dari sektor sayap. Sorotan utama jatuh pada *setter* muda Bintang Timur, Agung Pratama, yang menunjukkan performa luar biasa dengan distribusi bola tak terduga dan blok efektif. Penampilannya yang cerdas dan tenang di bawah tekanan tinggi menjadi faktor penentu untuk memaksa pertandingan berlanjut ke set penentuan.</p>
+
+                <p>Pada akhirnya, Bintang Timur mengunci kemenangan di set kelima dengan skor 15-13, mengakhiri era dominasi Garuda Perkasa dan meraih gelar juara Liga Voli Nasional pertama mereka. Kemenangan ini dirayakan sebagai pencapaian bersejarah bagi tim penantang, menandai lahirnya bintang-bintang baru di dunia olahraga voli nasional. Kemenangan ini juga diharapkan dapat memicu minat lebih besar terhadap olahraga voli di kalangan anak muda Indonesia.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-sorotan-1" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">BREAKING: Presiden Umumkan Pembentukan Kabinet Baru, Fokus Pada Kedaulatan Digital</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 2 November 2025 | Kategori: Nasional, Politik</p>
+                <img src="https://picsum.photos/seed/kabinetbesar/800/300" alt="Artikel Sorotan 1">
+                
+                <p>Istana Negara – Dalam pidato yang disiarkan secara langsung malam ini, Presiden mengumumkan perombakan kabinet besar-besaran, memperkenalkan wajah-wajah baru yang didominasi oleh pakar di bidang teknologi dan ekonomi digital. Keputusan ini menunjukkan komitmen serius pemerintah untuk mengakselerasi transformasi digital nasional. Fokus utama dari kabinet baru ini adalah pencapaian kedaulatan digital, sebuah inisiatif yang bertujuan untuk mengamankan data nasional dan mendorong inovasi teknologi buatan dalam negeri.</p>
+
+                <p>Kedaulatan digital mencakup pembangunan infrastruktur internet yang merata hingga ke pelosok, peningkatan kapasitas talenta digital melalui pendidikan vokasi dan beasiswa, serta regulasi yang mendukung pertumbuhan startup teknologi tanpa mengorbankan keamanan data pribadi warga negara. Perubahan ini disambut baik oleh pasar modal, yang melihat langkah proaktif ini sebagai katalisator pertumbuhan di tengah perlambatan ekonomi global. Namun, beberapa pengamat politik mengingatkan bahwa tantangan terbesar bukan pada formasi kabinet, melainkan pada eksekusi program di lapangan.</p>
+
+                <p>Komitmen terhadap kedaulatan digital ini diwujudkan dengan pembentukan Kementerian Transformasi Digital (KTD) yang berdiri sendiri, dipimpin oleh seorang mantan CEO perusahaan perusahaan teknologi terkemuka. KTD akan bertugas mengawasi semua proyek digital strategis nasional, termasuk pengembangan pusat data regional dan implementasi kecerdasan buatan dalam layanan publik. Keberhasilan program ini diharapkan dapat menempatkan Indonesia sebagai pemimpin ekonomi digital di kawasan Asia Tenggara dalam lima tahun ke depan.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-sorotan-2" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Raksasa Teknologi Luncurkan Satelit Komunikasi 6G Pertama di Dunia</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 2 November 2025 | Kategori: Teknologi, Sains</p>
+                <img src="https://picsum.photos/seed/satelit6g/800/300" alt="Artikel Sorotan 2">
+                
+                <p>Jumat, 1 November – Perusahaan antariksa global "TechNova" berhasil meluncurkan satelit komunikasi 6G (Generasi Keenam) pertama ke orbit rendah Bumi. Keberhasilan ini menandai dimulainya perlombaan untuk membangun jaringan internet *wireless* ultra-cepat yang diprediksi akan mengubah cara dunia berinteraksi. Jaringan 6G menjanjikan kecepatan transfer data hingga 1 terabit per detik, jauh melampaui kemampuan 5G saat ini, dan latensi yang hampir nihil.</p>
+
+                <p>Satelit 6G ini dirancang untuk menyediakan konektivitas global yang stabil dan berkecepatan tinggi, memungkinkan aplikasi canggih seperti hologram *real-time*, operasi bedah jarak jauh (tele-surgery) tanpa *delay*, dan pengembangan kota cerdas (smart cities) yang sepenuhnya terintegrasi. CEO TechNova dalam konferensi pers virtual mengatakan bahwa tujuannya adalah menjembatani kesenjangan digital dan memastikan bahwa akses internet super cepat dapat dijangkau bahkan di wilayah terpencil di mana infrastruktur kabel tidak memadai.</p>
+
+                <p>Para ahli telekomunikasi memproyeksikan bahwa peluncuran ini akan memicu investasi besar-besaran dalam teknologi 6G di seluruh dunia. Meskipun demikian, kekhawatiran juga muncul mengenai regulasi spektrum frekuensi baru dan risiko penumpukan sampah antariksa akibat bertambahnya jumlah satelit di orbit. TechNova menegaskan bahwa satelit mereka dilengkapi dengan teknologi penghindar tabrakan canggih dan mekanisme de-orbit otomatis untuk memastikan keberlanjutan ruang angkasa.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-sorotan-3" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Harga Minyak Dunia Anjlok Setelah Kesepakatan Produksi Baru OPEC</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 1 November 2025 | Kategori: Ekonomi, Global</p>
+                <img src="https://picsum.photos/seed/minyakmentah/800/300" alt="Artikel Sorotan 3">
+                
+                <p>London – Harga minyak mentah global mengalami penurunan tajam sebesar 5% di pasar berjangka setelah Organisasi Negara Pengekspor Minyak (OPEC) dan sekutunya mencapai kesepakatan mengejutkan untuk meningkatkan batas produksi minyak mentah. Keputusan ini, yang berlaku efektif bulan depan, bertujuan untuk menenangkan kekhawatiran pasar mengenai pasokan global yang menipis dan meredam inflasi energi yang telah membebani ekonomi negara-negara konsumen utama selama setahun terakhir.</p>
+
+                <p>Kesepakatan ini dicapai setelah negosiasi yang alot, di mana beberapa anggota OPEC yang bergantung pada harga tinggi awalnya menentang peningkatan produksi. Namun, tekanan dari konsumen global dan prospek permintaan yang melambat akibat potensi resesi di beberapa negara maju memaksa kelompok tersebut untuk bersikap lebih fleksibel. Analis berpendapat bahwa penurunan harga ini, meskipun positif bagi konsumen, dapat merugikan perusahaan-perusahaan energi di Amerika Serikat dan Kanada yang beroperasi dengan margin yang ketat.</p>
+
+                <p>Dampak langsung dari penurunan harga minyak ini terhadap Indonesia adalah potensi penurunan subsidi energi yang harus dikeluarkan pemerintah, memberikan ruang fiskal untuk dialokasikan ke sektor-sektor lain seperti infrastruktur dan kesehatan. Namun, di sisi lain, sebagai eksportir minyak, pendapatan negara dari komoditas ini mungkin akan sedikit berkurang. KILAT NEWS akan terus mengulas bagaimana dinamika geopolitik energi global ini akan memengaruhi kebijakan ekonomi domestik.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-video-1" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Warga Favela Brasil Demo Buntut 132 Tewas Saat Razia</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 31 Oktober 2025 | Kategori: Global, Kriminal</p>
+                <img src="https://picsum.photos/seed/favela/800/300" alt="Artikel Video 1">
+                
+                <p>Rio de Janeiro – Gelombang protes meletus di Rio de Janeiro setelah operasi kepolisian besar-besaran di sebuah kawasan favela berakhir tragis dengan tewasnya 132 warga sipil, termasuk anak-anak dan lansia. Insiden ini, yang memicu tuduhan pelanggaran hak asasi manusia dan penggunaan kekuatan berlebihan oleh aparat, telah menarik perhatian internasional dan memicu perdebatan sengit mengenai keamanan publik dan kondisi sosial-ekonomi di Brasil.</p>
+
+                <p>Organisasi hak asasi manusia lokal menuntut investigasi independen yang transparan. Menurut laporan awal, operasi tersebut awalnya menargetkan gembong narkoba, namun eskalasi kekerasan tak terhindarkan setelah terjadi baku tembak yang meluas. Pihak kepolisian bersikeras bahwa mereka bertindak sesuai prosedur baku tembak, tetapi rekaman video amatir yang beredar menunjukkan adegan-adegan yang dipertanyakan. Pemerintah federal telah menjanjikan penyelidikan menyeluruh untuk meredakan ketegangan yang memuncak di kota tersebut.</p>
+
+                <p>Dampak dari peristiwa ini meluas, menyebabkan penutupan sekolah dan bisnis di seluruh wilayah sekitar favela yang terdampak. Komunitas internasional mendesak PBB untuk turun tangan mengawasi proses hukum dan memastikan keadilan bagi para korban. KILAT NEWS menayangkan laporan video eksklusif dari lokasi kejadian yang menunjukkan situasi pasca-operasi yang penuh duka dan kemarahan publik.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-video-2" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Detik-detik Kereta Penumpang Tabrak Truk di Perlintasan</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 30 Oktober 2025 | Kategori: Nasional, Transportasi</p>
+                <img src="https://picsum.photos/seed/keretatrack/800/300" alt="Artikel Video 2">
+                
+                <p>Jawa Tengah – Sebuah kecelakaan tragis terjadi di perlintasan kereta api tak berpalang di Jawa Tengah, ketika sebuah kereta penumpang berkecepatan tinggi menabrak truk pengangkut bahan bangunan yang nekat menerobos palang. Insiden ini, yang terekam jelas oleh kamera pengawas stasiun, menyebabkan sedikitnya dua gerbong kereta anjlok dan menimbulkan korban luka-luka serius dari pihak penumpang. Petugas segera dikerahkan ke lokasi untuk evakuasi dan penyelidikan.</p>
+
+                <p>Menurut keterangan saksi mata, truk tersebut berusaha memotong jalur meskipun sinyal peringatan sudah berbunyi. Masinis kereta dilaporkan telah mencoba mengerem darurat, namun jarak yang terlalu dekat membuat tabrakan tak terhindarkan. Kecelakaan ini kembali menyoroti isu keselamatan di perlintasan kereta api, khususnya di jalur-jalur yang kurang terproteksi. Komite Nasional Keselamatan Transportasi (KNKT) telah mengirimkan tim investigasi untuk menganalisis detail teknis dan faktor kelalaian manusia.</p>
+
+                <p>Pihak kepolisian menyatakan bahwa sopir truk berhasil selamat namun langsung diamankan untuk dimintai keterangan lebih lanjut. Kerugian ditaksir mencapai miliaran rupiah, dan perbaikan jalur diperkirakan memakan waktu hingga 24 jam. Pemerintah daerah didesak untuk segera mengimplementasikan teknologi palang pintu otomatis di semua perlintasan yang rawan kecelakaan guna mencegah terulangnya insiden serupa di masa depan.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-video-3" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Resmi Meluncur, Roket Shenzhou-21 Bawa Astronaut</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 29 Oktober 2025 | Kategori: Sains, Global</p>
+                <img src="https://picsum.photos/seed/roketlaunch/800/300" alt="Artikel Video 3">
+                
+                <p>Pusat Peluncuran Satelit Jiuquan, Tiongkok – Tiongkok sukses meluncurkan roket Shenzhou-21 yang membawa tiga astronaut (taikonaut) untuk misi jangka panjang ke Stasiun Luar Angkasa Tiangong. Misi ini bertujuan untuk melakukan serangkaian eksperimen ilmiah lanjutan, termasuk penelitian biologi luar angkasa dan pengembangan teknologi komunikasi kuantum. Peluncuran berjalan mulus, menandai tonggak penting dalam ambisi Tiongkok untuk menjadi kekuatan dominasi di luar angkasa.</p>
+
+                <p>Ketiga taikonaut yang diutus akan bertugas selama enam bulan penuh di Tiangong, yang merupakan basis permanen Tiongkok di orbit Bumi. Selain tugas ilmiah, mereka juga akan melakukan *spacewalk* (berjalan di luar angkasa) untuk memasang modul panel surya generasi baru yang dirancang untuk meningkatkan pasokan energi stasiun. Misi ini juga menjadi ajang uji coba sistem daur ulang air dan udara tertutup yang canggih, yang sangat penting untuk misi penjelajahan luar angkasa di masa depan, seperti misi ke Mars.</p>
+
+                <p>Meskipun Tiongkok mengklaim program luar angkasanya bersifat damai, peluncuran ini terjadi di tengah meningkatnya ketegangan antara Amerika Serikat dan Tiongkok terkait eksplorasi bulan dan luar angkasa. Para pemimpin badan antariksa Tiongkok menegaskan bahwa kerja sama internasional tetap menjadi prioritas, meskipun mereka akan terus memimpin dalam penelitian dan pengembangan teknologi antariksa mandiri. KILAT NEWS menyajikan rekaman peluncuran roket Shenzhou-21 yang spektakuler.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-video-4" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Ricuh Demo Protes Hasil Pemilu di Tanzania Tewaskan...</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 28 Oktober 2025 | Kategori: Global, Politik</p>
+                <img src="https://picsum.photos/seed/tanzania-demo/800/300" alt="Artikel Video 4">
+                
+                <p>Dar es Salaam, Tanzania – Situasi politik di Tanzania memanas setelah hasil pemilihan umum diumumkan, memicu demonstrasi besar-besaran yang berakhir ricuh. Para demonstran, yang didukung oleh partai oposisi utama, menuduh adanya kecurangan masif dalam proses pemungutan suara dan menuntut penghitungan ulang suara di bawah pengawasan independen. Bentrokan dengan aparat keamanan di ibukota Dar es Salaam dilaporkan menewaskan beberapa warga sipil dan melukai puluhan lainnya.</p>
+
+                <p>Polisi anti-huru hara menggunakan gas air mata dan meriam air untuk membubarkan massa yang memblokir jalan-jalan utama dan membakar ban. Pimpinan oposisi menyatakan bahwa ini adalah "pembunuhan demokrasi" dan bersumpah untuk melanjutkan protes hingga tuntutan mereka dipenuhi. Sementara itu, komisi pemilihan umum bersikeras bahwa pemilu berjalan bebas dan adil, dan meminta pihak oposisi untuk menempuh jalur hukum alih-alih kekerasan di jalanan.</p>
+
+                <p>Komunitas negara-negara Afrika Timur (EAC) dan Uni Afrika telah mengeluarkan pernyataan yang menyerukan ketenangan dan menekan pemerintah Tanzania untuk menahan diri dari tindakan keras. Analis politik memandang krisis ini sebagai ancaman serius terhadap stabilitas demokrasi di Tanzania, yang selama ini dianggap relatif stabil. KILAT NEWS menyajikan liputan mendalam mengenai akar konflik dan dampak eskalasi demonstrasi terhadap ekonomi dan sosial Tanzania.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <!-- HALAMAN ARTIKEL TERPOPULER BARU -->
+            
+            <div id="artikel-terpopuler-4" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Ketegangan Geopolitik Baru di Laut Cina Selatan Memicu Kekhawatiran</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 1 November 2025 | Kategori: Global, Geopolitik</p>
+                <img src="https://picsum.photos/seed/geopolitik/800/300" alt="Artikel Terpopuler 4">
+                
+                <p>Beijing – Ketegangan di Laut Cina Selatan kembali memanas setelah insiden terbaru antara kapal penjaga pantai dan kapal penangkap ikan, memicu kekhawatiran global akan potensi konflik. Wilayah maritim yang disengketakan ini, yang kaya akan sumber daya alam dan merupakan jalur perdagangan vital, telah menjadi titik didih bagi kekuatan regional dan global. Analisis militer menunjukkan bahwa eskalasi terus meningkat, menuntut diplomasi yang cepat dan efektif dari semua pihak yang terlibat.</p>
+
+                <p>Insiden ini berpusat pada klaim kedaulatan yang tumpang tindih, melibatkan beberapa negara Asia Tenggara dan Tiongkok. Meskipun seruan untuk penyelesaian damai melalui hukum internasional terus disuarakan, peningkatan kehadiran militer dan patroli kapal-kapal besar menunjukkan kurangnya kemauan politik untuk mundur. Komunitas internasional, termasuk PBB dan negara-negara G7, mendesak semua pihak untuk mematuhi Kode Etik (COC) yang telah disepakati untuk wilayah tersebut, meskipun implementasinya masih lambat.</p>
+
+                <p>Dampak langsung dari ketidakstabilan ini terasa pada rantai pasokan global dan harga komoditas maritim. Selain itu, negara-negara tetangga yang bergantung pada keamanan jalur pelayaran merasa terancam. KILAT NEWS mewawancarai ahli strategi keamanan maritim yang menyimpulkan bahwa tanpa adanya mekanisme resolusi konflik yang kuat, Laut Cina Selatan akan terus menjadi kawasan paling berisiko tinggi di Asia Pasifik.</p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+            <div id="artikel-terpopuler-5" class="artikel-lengkap-halaman halaman-konten" style="display:none;">
+                <h1 class="halaman-judul">Penemuan Planet Baru di Zona Layak Huni: Harapan Kedua Umat Manusia</h1>
+                <p style="font-style: italic; color: #6c757d;">Diposting pada 3 November 2025 | Kategori: Sains, Astronomi</p>
+                <img src="https://picsum.photos/seed/exoplanet/800/300" alt="Artikel Terpopuler 5">
+                
+                <p>Pasadena, AS – Badan Antariksa Nasional (NASA) mengumumkan penemuan 'Exoplanet' baru yang dijuluki "Terra Nova", yang berada di dalam zona layak huni (Habitable Zone) bintangnya. Penemuan ini menjadi harapan baru bagi umat manusia karena Terra Nova memiliki massa, komposisi, dan suhu permukaan yang diklaim paling mirip dengan Bumi, meningkatkan kemungkinan besar adanya air dalam bentuk cair dan bahkan kehidupan mikroba. Jaraknya hanya 50 tahun cahaya dari Bumi, relatif dekat dalam skala astronomi.</p>
+
+                <p>Terra Nova ditemukan menggunakan Teleskop James Webb (JWST) melalui teknik transmisi spektroskopi, yang memungkinkan para ilmuwan menganalisis komposisi atmosfer planet tersebut. Data awal menunjukkan adanya kandungan oksigen, metana, dan uap air dalam jumlah yang signifikan. Meskipun para ilmuwan masih berhati-hati dalam menyimpulkan adanya kehidupan, penemuan ini memicu kegembiraan besar di komunitas ilmiah. Proyek teleskop generasi berikutnya segera diusulkan untuk studi lebih lanjut mengenai permukaan Terra Nova.</p>
+
+                <p>Penemuan ini tidak hanya memajukan ilmu pengetahuan, tetapi juga memicu perdebatan etika mengenai kemungkinan eksplorasi antarbintang dan kolonisasi di masa depan. Ilmuwan dari Caltech Institute of Technology, Dr. Elena Rostova, menyatakan bahwa Terra Nova adalah kandidat terbaik yang pernah ditemukan. "Ini adalah harapan kedua kita," ujarnya, menekankan pentingnya terus mendanai penelitian astronomi untuk menjawab pertanyaan mendasar: apakah kita sendirian di alam semesta? </p>
+                <button class="tombol-baca" onclick="tampilkanHalaman('home')">Kembali ke Berita Utama</button>
+            </div>
+
+
+        </main>
+        
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 KILAT NEWS. Hak Cipta Dilindungi.</p>
+            <p>Didesain oleh Fathir Ramadhan | Official Website: <a href="https://kilatnews.com" target="_blank">kilatnews.com</a></p>
+        </div>
+    </footer>
+
+
+    <script>
+        
+        const daftarHalaman = [
+            'home', 'about', 'gallery', 'registration', 'contact', 
+            'artikel-lengkap-1', 'artikel-lengkap-2', 'artikel-lengkap-3', 
+            'artikel-sorotan-1', 'artikel-sorotan-2', 'artikel-sorotan-3', 
+            'artikel-video-1', 'artikel-video-2', 'artikel-video-3', 'artikel-video-4',
+            'artikel-terpopuler-4', 'artikel-terpopuler-5' 
+        ];
+        let slideIndex = 0;
+        
+        function tampilkanHalaman(halamanId) {
+            daftarHalaman.forEach(id => {
+                const elemen = document.getElementById(id);
+                if (elemen) {
+                    elemen.style.display = 'none';
+                }
+            });
+
+            const halamanAktif = document.getElementById(halamanId);
+            if (halamanAktif) {
+                halamanAktif.style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+            
+            const menuLinks = document.querySelectorAll('.nav-menu a');
+            menuLinks.forEach(link => {
+                link.classList.remove('aktif');
+            });
+
+            let linkId = halamanId.split('-')[0];
+            if (halamanId.includes('artikel-lengkap') || halamanId.includes('artikel-sorotan') || halamanId.includes('artikel-video') || halamanId.includes('artikel-terpopuler')) {
+                linkId = 'home';
+            }
+
+            const tautanAktif = document.querySelector(`.nav-menu a[onclick*="tampilkanHalaman('${linkId}')"]`);
+            if (tautanAktif) {
+                tautanAktif.classList.add('aktif');
+            }
+        }
+        
+        function tampilkanArtikel(nomor) {
+            tampilkanHalaman(`artikel-lengkap-${nomor}`);
+        }
+
+        function updateJam() {
+            const jamElemen = document.getElementById('widget-jam');
+            if (jamElemen) {
+                const sekarang = new Date();
+                const opsi = { 
+                    weekday: 'short', 
+                    day: '2-digit', 
+                    month: 'short', 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit' 
+                };
+                jamElemen.textContent = sekarang.toLocaleTimeString('id-ID', opsi).replace(/,/, '');
+            }
+        }
+
+        function siapkanFormulir() {
+            const formRegistrasi = document.getElementById('form-registrasi');
+            const pesanRegistrasi = document.getElementById('pesan-registrasi');
+            
+            if (formRegistrasi) {
+                formRegistrasi.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    pesanRegistrasi.textContent = "✅ Pendaftaran berhasil! Terima kasih telah berlangganan.";
+                    formRegistrasi.reset();
+                    setTimeout(() => pesanRegistrasi.textContent = '', 5000);
+                });
+            }
+
+            const formKontak = document.getElementById('form-kontak');
+            const pesanKontak = document.getElementById('pesan-kontak');
+            
+            if (formKontak) {
+                formKontak.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    pesanKontak.textContent = "✅ Pesan Anda telah terkirim. Kami akan merespons secepatnya.";
+                    formKontak.reset();
+                    setTimeout(() => pesanKontak.textContent = '', 5000);
+                });
+            }
+        }
+        
+        function tampilkanSlide() {
+            const items = document.querySelectorAll('.carousel-item');
+            const totalSlides = items.length;
+            const inner = document.getElementById('photo-carousel-inner');
+            
+            if (inner) {
+                slideIndex++;
+                if (slideIndex >= totalSlides) {
+                    slideIndex = 0;
+                }
+                const offset = -slideIndex * 100;
+                inner.style.transform = `translateX(${offset}%)`;
+            }
+        }
+
+        function inisialisasiCarousel() {
+            const carousel = document.getElementById('photo-carousel-inner');
+            if (carousel) {
+                // Atur interval carousel hanya jika carousel ada
+                setInterval(tampilkanSlide, 5000); // Ganti slide setiap 5 detik
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            tampilkanHalaman('home'); 
+            updateJam();
+            setInterval(updateJam, 1000);
+            siapkanFormulir();
+            inisialisasiCarousel();
+        });
+
+    </script>
+</body>
+</html>
